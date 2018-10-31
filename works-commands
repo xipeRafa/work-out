@@ -1,0 +1,26 @@
+rails new workout_log
+
+rails g model workout date:datetime workout:string mood:string length:string
+rake db:migrate
+rails g controller workouts
+routes.rb
+   resources :workouts
+   root "workouts#index"
+workouts_controller.rb
+   def index
+   end
+
+rails g simple_form:install --bootstrap
+
+rails g model exercise name:string sets:integer reps:integer workout:references
+rake db:migrate
+
+workout.rb
+  has_many :exercises, dependent: :destroy
+routes.rb
+  resources :workouts do
+    resources :exercises
+  end
+  root "workouts#index"
+
+rails g controller exercises
